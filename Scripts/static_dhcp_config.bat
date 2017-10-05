@@ -23,7 +23,7 @@ echo [!] WARNING: Script doesnt work if Gateway is left blank
 echo Default Gateway:
 set /p D_Gate=
 
-echo [!] WARNING: Script doesnt work if Subnet Mast is left blank
+echo [!] WARNING: Script doesnt work if Subnet Mask is left blank
 echo Subnet Mask: 
 set /p Sub_Mask=
 
