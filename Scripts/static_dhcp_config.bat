@@ -1,8 +1,16 @@
-@echo off 
+@echo off
+REM UPDATED: 06/10/17
+SETLOCAL EnableDelayedExpansion
+for /F "tokens=1,2 delims=#" %%a in ('"prompt #$H#$E# & echo on & for %%b in (1) do     rem"') do (
+  set "DEL=%%a"
+)
 echo.
-REM updated 10/5/2017 - Glenn
-echo Glenns CMD Network Config:
-echo (because using the mouse is a waste of time)
+
+REM START HERE
+echo.
+call :colorEcho 02 "Glenns' Network Config"
+echo.
+call :colorEcho 0e "(because using the mouse is a waste of time)"
 echo.
 echo [A] Set Static IP 
 echo [B] Set DHCP 
@@ -14,16 +22,20 @@ for %%? in (A) do if /I "%C%"=="%%?" goto A
 for %%? in (B) do if /I "%C%"=="%%?" goto B 
 goto choice 
 :A 
+
 @echo off 
-echo [!] Please enter Static IP Address Information
+cls
+call :colorEcho 19 "Please enter Static IP Address Information"
+echo.
 echo Static IP Address: 
 set /p IP_Addr=
 
+cls
 echo [!] WARNING: Script doesnt work if Gateway is left blank 
 echo Default Gateway:
 set /p D_Gate=
 
-echo [!] WARNING: Script doesnt work if Subnet Mask is left blank
+echo [!] WARNING: Script doesnt work if Subnet Mast is left blank
 echo Subnet Mask: 
 set /p Sub_Mask=
 
@@ -46,3 +58,11 @@ netsh int ip show config
 pause 
 goto end 
 :end
+
+REM COLOR ECHO FUNCTION
+:colorEcho
+echo off
+<nul set /p ".=%DEL%" > "%~2"
+findstr /v /a:%1 /R "^$" "%~2" nul
+del "%~2" > nul 2>&1i
+
