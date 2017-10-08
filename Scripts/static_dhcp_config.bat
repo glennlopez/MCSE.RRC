@@ -1,8 +1,8 @@
 @echo off 
 echo.
 REM updated 10/5/2017 - Glenn
-echo Glenns CMD Network Config:
-echo (because using the mouse is a waste of time)
+echo Glenns Network Config-er:
+echo (because using the mouse to configure your network is a waste of time)
 echo.
 echo [A] Set Static IP 
 echo [B] Set DHCP 
