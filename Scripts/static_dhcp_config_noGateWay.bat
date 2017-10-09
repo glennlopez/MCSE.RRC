@@ -25,7 +25,7 @@ set /p Sub_Mask=
 
 cls
 echo Setting Static IP Information 
-netsh interface ip set address "mcse" static %IP_Addr% %Sub_Mask% 1 
+netsh interface ip set address "mcse" static %IP_Addr% %Sub_Mask%  
 netsh int ip show config 
 pause 
 goto end
