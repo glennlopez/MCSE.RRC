@@ -1,6 +1,6 @@
 @echo off 
 echo.
-REM updated 10/5/2017 - Glenn
+REM https://github.com/glennlopez/MCSE.RRC/tree/master/Scripts
 echo Glenns Network Config-er: NO GATEWAY
 echo (because using the mouse to configure your network is a waste of time)
 echo.
