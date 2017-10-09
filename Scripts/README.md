@@ -5,6 +5,5 @@ These scripts were made specifically for removing the "busy-work" out of lab con
 
 Troubleshooting/Known Bugs
 ---
-* Network Config scripts don't seem to work on Server 2008 R2
 * Script doesnt change any of the network config:
  > Fix this by renaming your network adaptor from "Local Area Connection" to "mcse" (case-sensitive)
