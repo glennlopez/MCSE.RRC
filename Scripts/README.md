@@ -6,4 +6,4 @@ These scripts were made specifically for removing the "busy-work" out of lab con
 Troubleshooting/Known Bugs
 ---
 * Script doesnt change any of the network config:
- > Fix this by renaming your network adaptor from "Local Area Connection" to "mcse" (case-sensitive)
+    > Fix this by renaming your network adaptor from "Local Area Connection" to "mcse" (case-sensitive)
