@@ -27,6 +27,8 @@ cls
 echo Setting Static IP Information 
 netsh interface ip set address "mcse" static %IP_Addr% %Sub_Mask%  
 netsh int ip show config 
+ipconfig /all
+echo.
 pause 
 goto end
 
@@ -39,6 +41,7 @@ ipconfig /renew
 
 ECHO Here are the new settings for %computername%: 
 netsh int ip show config
+ipconfig /all
 
 pause 
 goto end 
