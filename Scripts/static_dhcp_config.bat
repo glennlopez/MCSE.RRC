@@ -13,6 +13,7 @@ SET /P C=Choose A or B:
 for %%? in (A) do if /I "%C%"=="%%?" goto A 
 for %%? in (B) do if /I "%C%"=="%%?" goto B 
 goto choice 
+
 :A 
 @echo off 
 cls
