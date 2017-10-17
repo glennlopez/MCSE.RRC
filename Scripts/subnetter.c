@@ -4,7 +4,7 @@
 
 //PROTOTYPES 
 void convert(int);
-
+void msg_title(void);
 //GLOBAL VARIABLES
 
 /*
@@ -31,12 +31,16 @@ int main () {
 
    return(0);
 } 
+//TITLE MESSAGE SUBROUTINE
+void msg_title(void){
+    printf("TITLE GOES HERE"\n);
+}
 
 //DECIMAL TO BINARY SUBROUTINE
 void convert(int param){
-    int uNum = param;      //user decimal input
-    int uBin[32];       //binary conversion storage
-    int count = 0;      //used for indexing array
+    int uNum = param;       //user decimal input
+    int uBin[32];           //binary conversion storage
+    int count = 0;          //used for indexing array
 
     //FIXME: re-code to use recursive
     //          add leading zeroes for AND/OR function
