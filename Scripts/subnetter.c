@@ -9,7 +9,8 @@ void convert(int);
 
 /*
     This needs to be compiled using TDM-GCC MinGW Compiler
-    in windows. CMD: gcc subnetter.c -o subnetter
+    in windows (install that first). Then type "gcc subnetter.c -o subnetter" 
+    in the command prompt to make an exe out of this source code
 */
 
 
