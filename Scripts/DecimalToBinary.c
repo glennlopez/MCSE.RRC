@@ -3,16 +3,19 @@
 #include <stdlib.h>
 
 //PROTOTYPES 
-void convert(int, int*);
-void printArray(int*);
+void convert(int, int*);    //converts decimal to binary
+void printArray(int*);      //print contents of array[]
 
 //GLOBAL VARIABLES
-int host[32];
+int host[32];               //stores user input in binary
+int subnet[32];             //stores user subnet mask in binary
 
 
 
 //MAIN ROUTINE
 int main () {
+
+    //FIXME: Make use of command line arguments to get the number to convert
 
     //User prompt for ip
     char usrStr[10];
@@ -52,6 +55,8 @@ void printArray(int* param){
     }
     printf("\n");
 }
+
+
 
 //DECIMAL TO BINARY SUBROUTINE
 void convert(int param, int* param2){ int count = 0;
