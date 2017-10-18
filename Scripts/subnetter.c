@@ -5,7 +5,6 @@
 //PROTOTYPES 
 void convert(int);          //binary converter
 void msg_title(void);       //welcome text
-int strToInt(char);         //converts string input to int
 
 //GLOBAL VARIABLES
 unsigned int host[32];      //user ip input storage
@@ -22,7 +21,8 @@ unsigned int network[32];   //network address
 //MAIN ROUTINE
 int main () {
 
-    char usrStr = "10"; //FIXME: get string 10 to convert to int 10
+    char usrStr[] = "10"; //FIXME: get string 10 to convert to int 10
+    int usrInt = atoi(usrStr);
 
     //FIXME: Create a function for configing 
 
@@ -35,8 +35,7 @@ int main () {
     */
 
     //DEBUG OUTPUT - for testing
-    convert(strToInt(usrStr));
-    
+    convert(usrInt);
 
     return(0);
 } 
@@ -46,14 +45,6 @@ int main () {
 //TITLE MESSAGE SUBROUTINE
 void msg_title(void){
     //TODO: create this function
-}
-
-
-
-//STRING TO INT SUBROUTINE
-int strToInt(char param){
-    int result = (int)param - 48;
-    return result;
 }
 
 
