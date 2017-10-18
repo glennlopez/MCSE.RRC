@@ -33,7 +33,7 @@ int main () {
 } 
 //TITLE MESSAGE SUBROUTINE
 void msg_title(void){
-    printf("TITLE GOES HERE"\n);
+    printf("TITLE GOES HERE\n");
 }
 
 //DECIMAL TO BINARY SUBROUTINE
@@ -43,6 +43,7 @@ void convert(int param){
     int count = 0;          //used for indexing array
 
     //FIXME: re-code to use recursive
+    //          make subroutine have modular imputs
     //          add leading zeroes for AND/OR function
 
     if(uNum == 1){
