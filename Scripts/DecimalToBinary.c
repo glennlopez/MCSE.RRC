@@ -8,11 +8,6 @@ void convert(int, int*);
 //GLOBAL VARIABLES
 int host[32];
 
-/*
-    This needs to be compiled using TDM-GCC MinGW Compiler
-    in windows (install that first). Then type "gcc subnetter.c -o subnetter" 
-    in the command prompt to make an exe out of this source code
-*/
 
 
 //MAIN ROUTINE
@@ -32,6 +27,17 @@ int main () {
     }
     printf("\n");
 
+/*  COMPILING IN WINDOWS:
+        This needs to be compiled using TDM-GCC MinGW Compiler
+        in windows (install that first). Then type "gcc subnetter.c -o subnetter" 
+        in the command prompt to make an exe out of this source code
+*/
+
+/*  COMPILING IN WINDOWS:
+        char command[50];
+        system(command);
+        system("pause");
+*/
     return(0);
 } 
 
