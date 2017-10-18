@@ -3,13 +3,13 @@
 #include <stdlib.h>
 
 //PROTOTYPES 
-void convert(int);          //binary converter
+void convert(int, int*);    //convert(number to convert, array to store the value)
 void msg_title(void);       //welcome text
 
 //GLOBAL VARIABLES
-unsigned int host[32];      //user ip input storage
-unsigned int mask[32];      //subnet ip
-unsigned int network[32];   //network address
+int host[32];      //user ip binary storage
+int mask[32];      //subnet ip binary storage
+int network[32];   //network address binary storage
 
 /*
     This needs to be compiled using TDM-GCC MinGW Compiler
@@ -21,7 +21,7 @@ unsigned int network[32];   //network address
 //MAIN ROUTINE
 int main () {
 
-    char usrStr[] = "10"; //FIXME: get string 10 to convert to int 10
+    char usrStr[] = "8";
     int usrInt = atoi(usrStr);
 
     //FIXME: Create a function for configing 
@@ -34,9 +34,18 @@ int main () {
     system("pause");
     */
 
-    //DEBUG OUTPUT - for testing
-    convert(usrInt);
 
+
+    //DEBUG OUTPUT - for testing
+    convert(usrInt, host);
+
+    for(int i = 32; i >= 0; i--){
+        printf("%i", host[i]);
+    }
+    printf("\n");
+
+
+    
     return(0);
 } 
 
@@ -49,39 +58,33 @@ void msg_title(void){
 
 
 
-//DECIMAL TO BINARY SUBROUTINE
-void convert(int param){
-    int uNum = param;       //user decimal input
-    int uBin[32];           //binary conversion storage     //FIXME: Replace with global passbyref
-    int count = 0;          //used for indexing array
+//USER INPUT SUBROUTINE
 
-    if(uNum == 1){
-        uBin[0] = 1;
+
+
+//DECIMAL TO BINARY SUBROUTINE
+void convert(int param, int* param2){ int count = 0;
+
+    if(param == 1){
+        param2[0] = 1;
     }
 
-    while(uNum != 1){
-        if(uNum % 2){
-            uBin[count] = 1;
+    while(param != 1){
+        if(param % 2){
+            param2[count] = 1;
         }
         else{
-            uBin[count] = 0;
+            param2[count] = 0;
         }
 
-        uNum /= 2;
+        param /= 2;
 
-        if(uNum == 1){
-            uBin[count + 1] = 1;
+        if(param == 1){
+            param2[count + 1] = 1;
         }
 
         count++;
     }
-
-    //DEBUT OUTPUT
-    for(int i = count; i >= 0; i--){
-        printf("%i", uBin[i]);
-
-    }
-
 }
 
 //BINARY-AND SUBROUTINE
