@@ -3,9 +3,14 @@
 #include <stdlib.h>
 
 //PROTOTYPES 
-void convert(int);
-void msg_title(void);
+void convert(int);          //binary converter
+void msg_title(void);       //welcome text
+int strToInt(char);         //converts string input to int
+
 //GLOBAL VARIABLES
+unsigned int host[32];      //user ip input storage
+unsigned int mask[32];      //subnet ip
+unsigned int network[32];   //network address
 
 /*
     This needs to be compiled using TDM-GCC MinGW Compiler
@@ -17,6 +22,10 @@ void msg_title(void);
 //MAIN ROUTINE
 int main () {
 
+    char usrStr = "10"; //FIXME: get string 10 to convert to int 10
+
+    //FIXME: Create a function for configing 
+
     //Windows CMD START HERE
     /*
     char command[50];
@@ -26,25 +35,34 @@ int main () {
     */
 
     //DEBUG OUTPUT - for testing
-    convert(123);
+    convert(strToInt(usrStr));
+    
 
-
-   return(0);
+    return(0);
 } 
+
+
+
 //TITLE MESSAGE SUBROUTINE
 void msg_title(void){
-    printf("TITLE GOES HERE\n");
+    //TODO: create this function
 }
+
+
+
+//STRING TO INT SUBROUTINE
+int strToInt(char param){
+    int result = (int)param - 48;
+    return result;
+}
+
+
 
 //DECIMAL TO BINARY SUBROUTINE
 void convert(int param){
     int uNum = param;       //user decimal input
-    int uBin[32];           //binary conversion storage
+    int uBin[32];           //binary conversion storage     //FIXME: Replace with global passbyref
     int count = 0;          //used for indexing array
-
-    //FIXME: re-code to use recursive
-    //          make subroutine have modular imputs
-    //          add leading zeroes for AND/OR function
 
     if(uNum == 1){
         uBin[0] = 1;
@@ -67,9 +85,12 @@ void convert(int param){
         count++;
     }
 
+    //DEBUT OUTPUT
     for(int i = count; i >= 0; i--){
         printf("%i", uBin[i]);
 
     }
 
 }
+
+//BINARY-AND SUBROUTINE
