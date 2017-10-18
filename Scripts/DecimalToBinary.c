@@ -4,6 +4,7 @@
 
 //PROTOTYPES 
 void convert(int, int*);
+void printArray(int*);
 
 //GLOBAL VARIABLES
 int host[32];
@@ -20,18 +21,7 @@ int main () {
     int usrInt = atoi(usrStr);
 
     convert(usrInt, host);
-
-    //print output to screen
-    for(int i = 31; i >= 0; i--){
-        printf("%i", host[i]);
-
-        //octet spacer
-        if(!(i % 8)){
-            printf(" ");
-        }
-
-    }
-    printf("\n");
+    printArray(host);
 
 /*  COMPILING IN WINDOWS:
         This needs to be compiled using TDM-GCC MinGW Compiler
@@ -48,6 +38,20 @@ int main () {
 } 
 
 
+
+//PRINT OUT SUBROUTINE
+void printArray(int* param){
+    for(int i = 31; i >= 0; i--){
+        printf("%i", param[i]);
+
+        //octet spacer
+        if(!(i % 8)){
+            printf(" ");
+        }
+
+    }
+    printf("\n");
+}
 
 //DECIMAL TO BINARY SUBROUTINE
 void convert(int param, int* param2){ int count = 0;
