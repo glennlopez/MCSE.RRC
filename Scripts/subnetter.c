@@ -4,7 +4,6 @@
 
 //PROTOTYPES 
 void convert(int, int*);    //convert(number to convert, array to store the value)
-void msg_title(void);       //welcome text
 
 //GLOBAL VARIABLES
 int host[32];      //user ip binary storage
@@ -21,9 +20,12 @@ int network[32];   //network address binary storage
 //MAIN ROUTINE
 int main () {
 
-    char usrStr[] = "8";
+    //User prompt for ip
+    char usrStr[10];
+    printf("IP Address to subnet: ");
+    scanf("%s", usrStr);
     int usrInt = atoi(usrStr);
-
+    
     //FIXME: Create a function for configing 
 
     //Windows CMD START HERE
@@ -45,26 +47,16 @@ int main () {
     printf("\n");
 
 
-    
+
     return(0);
 } 
-
-
-
-//TITLE MESSAGE SUBROUTINE
-void msg_title(void){
-    //TODO: create this function
-}
-
-
-
-//USER INPUT SUBROUTINE
 
 
 
 //DECIMAL TO BINARY SUBROUTINE
 void convert(int param, int* param2){ int count = 0;
 
+    //Divide n by 2 and store remainder as a binary 1 until n = 1
     if(param == 1){
         param2[0] = 1;
     }
