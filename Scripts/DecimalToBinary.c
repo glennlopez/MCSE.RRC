@@ -2,21 +2,29 @@
 #include <string.h>
 #include <stdlib.h>
 
-//PROTOTYPES 
-void convert(int, int*);    //converts decimal to binary
-void printArray(int*);      //print contents of array[]
+#define DWORD 32
+#define WORD 16
+#define OCTET 8
+#define NIBBLE 4
+
+//SUBROUTINE PROTOTYPES 
+void convert(int, int*);    //convert(decimal to binary, stored at an array[])
+void printArray(int*);      //print(contents of array[])
+void calcNetwork(int*);     //calculateNetworkAddress(store the result at an array[])
 
 //GLOBAL VARIABLES
-int host[32];               //stores user input in binary
-int subnet[32];             //stores user subnet mask in binary
-
+    //FIXME: use 2 dimentional arrays for storing IP numbers
+int host[DWORD];                       //stores user input in binary
+int subnet[DWORD] = {1,1,1,0,1};       //stores user subnet mask in binary
+int network[DWORD];                    //stores result of host AND-ed subnet
 
 
 //MAIN ROUTINE
-int main () {
+int main() {
 
     //FIXME: Make use of command line arguments to get the number to convert
 
+    //FIXME: Make user prompt a subroutine
     //User prompt for ip
     char usrStr[10];
     printf("Decimal to convert: ");
@@ -25,6 +33,8 @@ int main () {
 
     convert(usrInt, host);
     printArray(host);
+    printArray(subnet);
+    printArray(network);
 
 /*  COMPILING IN WINDOWS:
         This needs to be compiled using TDM-GCC MinGW Compiler
@@ -42,13 +52,20 @@ int main () {
 
 
 
+//NETWORK ADDRESS CALCULATION SUBROUTINE
+void calcNetwork(int* param){
+    //FIXME: make this happen
+}
+
+
 //PRINT OUT SUBROUTINE
 void printArray(int* param){
-    for(int i = 31; i >= 0; i--){
+    int outputSize = OCTET;
+    for(int i = (outputSize-1); i >= 0; i--){
         printf("%i", param[i]);
 
         //octet spacer
-        if(!(i % 8)){
+        if(!(i % OCTET)){
             printf(" ");
         }
 
