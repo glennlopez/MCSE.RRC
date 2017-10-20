@@ -15,9 +15,9 @@ void calcAND(int*, int*, int*);     //Logic AND calculator func(binary, binary, 
 
 //GLOBAL VARIABLES
     //FIXME: use 2 dimentional arrays for storing IP numbers
-int host[DWORD];                       //stores user input in binary
+int host[DWORD];                     //stores user input in binary
 int subnet[DWORD] = {0,1,1,1};       //stores user subnet mask in binary using cidr notation
-int network[DWORD];                    //stores result of host AND-ed subnet
+int network[DWORD];                  //stores result of host AND-ed subnet
 
 
 //MAIN ROUTINE
@@ -33,7 +33,8 @@ int main(int argc, char* argv[]) { char usrStr[10];
             usrStr[i] = argv[1][i];
         }
     }
-    int usrInt = atoi(usrStr);
+    //convert user string to int (comes from cmd-line argument and scanf)
+    int usrInt = atoi(usrStr);  //FIXME: CIDR "/" notation will create bugs for usrInt variable
 
     //DEBUG - print outs
     convertBin(usrInt, host);
@@ -48,6 +49,8 @@ int main(int argc, char* argv[]) { char usrStr[10];
     printf("Z: ");
     printArray(network);
 
+    printf("Dec: %i\n", convertDec(host));
+
     return(0);
 } 
 
@@ -55,7 +58,6 @@ int main(int argc, char* argv[]) { char usrStr[10];
 
 //NETWORK ADDRESS CALCULATION SUBROUTINE
 void calcAND(int* param1, int* param2, int* result){
-    //FIXME: make this happen
     int BITLIMIT = OCTET;
     
     for(int i = 0; i < BITLIMIT; i++){
@@ -111,7 +113,16 @@ void convertBin(int param, int* param2){ int count = 0;
 
 
 //BINARY TO DECIMAL SUBROUTINE
-int convertDec(int* param){
+int convertDec(int* param){ int result = 0;
     //FIXME: make this happen
-    return 0;
+    int BITLIMIT = OCTET;
+    int binWeight[] = {1,2,4,8,16,32,64,128};
+
+    for(int i = 0; i < BITLIMIT; i++){
+        if(param[i] == 1){
+            result += binWeight[i];
+        }
+    }
+
+    return result;
 }
