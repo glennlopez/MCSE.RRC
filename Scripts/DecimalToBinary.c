@@ -8,7 +8,7 @@
 #define NIBBLE 4
 
 //SUBROUTINE PROTOTYPES 
-void convertBin(int, int*);         //convert(decimal to binary, stored at an array[])
+int convertBin(int, int*);         //convert(decimal to binary, stored at an array[])
 int convertDec(int*);               //convers binary from an array[] and returns decimal
 void printArray(int*);              //print(contents of array[])
 void calcAND(int*, int*, int*);     //Logic AND calculator func(binary, binary, store results in array[])
@@ -85,7 +85,12 @@ void printArray(int* param){
 
 
 //DECIMAL TO BINARY SUBROUTINE
-void convertBin(int param, int* param2){ int count = 0;
+int convertBin(int param, int* param2){ int count = 0;
+
+    if(param > 255){
+        printf("Error: No such IP Address (an octet is larger than 255).\n");
+        return 2;
+    }
 
     //Divide n by 2 and store remainder as a binary 1 until n = 1
     if(param == 1){
@@ -108,16 +113,18 @@ void convertBin(int param, int* param2){ int count = 0;
 
         count++;
     }
+    return 0;
 }
 
 
 
 //BINARY TO DECIMAL SUBROUTINE
 int convertDec(int* param){ int result = 0;
-    //FIXME: make this happen
+
     int BITLIMIT = OCTET;
     int binWeight[] = {1,2,4,8,16,32,64,128};
 
+    //uses binary weight addition to convert binary to decimal
     for(int i = 0; i < BITLIMIT; i++){
         if(param[i] == 1){
             result += binWeight[i];
