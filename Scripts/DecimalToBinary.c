@@ -15,20 +15,26 @@ void calcNetwork(int*);     //calculateNetworkAddress(store the result at an arr
 //GLOBAL VARIABLES
     //FIXME: use 2 dimentional arrays for storing IP numbers
 int host[DWORD];                       //stores user input in binary
-int subnet[DWORD] = {1,1,1,0,1};       //stores user subnet mask in binary
+int subnet[DWORD] = {1,1,1,0,1};       //stores user subnet mask in binary using cidr notation
 int network[DWORD];                    //stores result of host AND-ed subnet
 
 
 //MAIN ROUTINE
-int main() {
+int main(int argc, char* argv[]) {
 
-    //FIXME: Make use of command line arguments to get the number to convert
-
-    //FIXME: Make user prompt a subroutine
-    //User prompt for ip
     char usrStr[10];
-    printf("Decimal to convert: ");
-    scanf("%s", usrStr);
+
+    //Allow user input via command-line argument 
+    if(argc != 2){
+        printf("Decimal to convert: ");
+        scanf("%s", usrStr);
+    }
+    else{
+        for(int i = 0; argv[1][i] != '\0'; i++){
+            usrStr[i] = argv[1][i];
+        }
+    }
+
     int usrInt = atoi(usrStr);
 
     convert(usrInt, host);
@@ -36,17 +42,6 @@ int main() {
     printArray(subnet);
     printArray(network);
 
-/*  COMPILING IN WINDOWS:
-        This needs to be compiled using TDM-GCC MinGW Compiler
-        in windows (install that first). Then type "gcc subnetter.c -o subnetter" 
-        in the command prompt to make an exe out of this source code
-*/
-
-/*  COMPILING IN WINDOWS:
-        char command[50];
-        system(command);
-        system("pause");
-*/
     return(0);
 } 
 
@@ -58,7 +53,7 @@ void calcNetwork(int* param){
 }
 
 
-//PRINT OUT SUBROUTINE
+//PRINT-OUT SUBROUTINE
 void printArray(int* param){
     int outputSize = OCTET;
     for(int i = (outputSize-1); i >= 0; i--){
