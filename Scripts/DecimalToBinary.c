@@ -22,8 +22,6 @@ int network[DWORD];                  //stores result of host AND-ed subnet
 
 //MAIN ROUTINE
 int main(int argc, char* argv[]) { char usrStr[10];
-
-    //Command-line argument 
     if(argc != 2){
         printf("Decimal to convert: ");
         scanf("%s", usrStr);
@@ -35,6 +33,12 @@ int main(int argc, char* argv[]) { char usrStr[10];
     }
     //convert user string to int (comes from cmd-line argument and scanf)
     int usrInt = atoi(usrStr);  //FIXME: CIDR "/" notation will create bugs for usrInt variable
+
+    //IP address sanity check
+    if(usrInt > 255){
+        printf("Error: No such IP Address.\n");
+        return 2;
+    }
 
     //DEBUG - print outs
     convertBin(usrInt, host);
@@ -56,7 +60,7 @@ int main(int argc, char* argv[]) { char usrStr[10];
 
 
 
-//NETWORK ADDRESS CALCULATION SUBROUTINE
+//AND-MASK SUBROUTINE
 void calcAND(int* param1, int* param2, int* result){
     int BITLIMIT = OCTET;
     
@@ -86,11 +90,6 @@ void printArray(int* param){
 
 //DECIMAL TO BINARY SUBROUTINE
 int convertBin(int param, int* param2){ int count = 0;
-
-    if(param > 255){
-        printf("Error: No such IP Address (an octet is larger than 255).\n");
-        return 2;
-    }
 
     //Divide n by 2 and store remainder as a binary 1 until n = 1
     if(param == 1){
