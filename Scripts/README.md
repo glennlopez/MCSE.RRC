@@ -8,4 +8,4 @@ Troubleshooting
 * If scripts does not change any of the network config:
     > Fix this by renaming your network adaptor from "Local Area Connection" to "mcse" (case-sensitive)
 * .c files does not open or opens in a text editor
-    > Noob! .c files need to be compiled first; use TDM-GCC MinGW Compiler
+    > .c files need to be compiled first; use TDM-GCC MinGW Compiler if you're on a Windows Machine, or use GCC if you're running a Linux or MacOS Machine
