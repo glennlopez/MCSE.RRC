@@ -32,7 +32,8 @@ int main(int argc, char* argv[]) { char usrStr[10];
         }
     }
     //convert user string to int (comes from cmd-line argument and scanf)
-    int usrInt = atoi(usrStr);  //FIXME: CIDR "/" notation will create bugs for usrInt variable
+    int usrInt = atoi(usrStr);  
+    //FIXME: CIDR "/" notation will create bugs for usrInt variable - use if to filter through the string
 
     //IP address sanity check
     if(usrInt > 255){
@@ -127,7 +128,7 @@ int convertDec(int* param){ int result = 0;
     for(int i = 0; i < BITLIMIT; i++){
         if(param[i] == 1){
             result += binWeight[i];
-        }
+        } 
     }
 
     return result;
