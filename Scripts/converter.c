@@ -8,7 +8,8 @@
 #define NIBBLE 4
 
 //SUBROUTINE PROTOTYPES 
-void welcome(void);
+int system(const char*);            //system calls
+void welcome(void);                 //reserved for welcome ascii art
 int convertBin(int, int*);          //convert(decimal to binary, stored at an array[])
 int convertDec(int*);               //convers binary from an array[] and returns decimal
 void printArray(int*);              //print(contents of array[])
@@ -16,15 +17,17 @@ void calcAND(int*, int*, int*);     //Logic AND calculator func(binary, binary, 
 
 //GLOBAL VARIABLES
     //FIXME: use 2 dimentional arrays for storing IP numbers
-int host[DWORD];                     //stores user input in binary
-int subnet[DWORD] = {0,1,1,1};       //stores user subnet mask in binary using cidr notation
-int network[DWORD];                  //stores result of host AND-ed subnet
+int host[DWORD];                    //stores user input in binary
+int subnet[DWORD] = {0,1,1,1};      //stores user subnet mask in binary using cidr notation
+int network[DWORD];                 //stores result of host AND-ed subnet
+char command[150];                  //used for system() calls to OS layer commands
 
 
 //MAIN ROUTINE
 int main(int argc, char* argv[]) { char usrStr[10];
     if(argc != 2){
         welcome();              //welcome the user
+        printf("Convert: ");
         scanf("%s", usrStr);    //grab users input
     }
     else{
@@ -42,6 +45,8 @@ int main(int argc, char* argv[]) { char usrStr[10];
         //FIXME: replace returning error code with assuming the user wanted to convert binary to decimal
         return 2;
     }
+
+
 
     //DEBUG - print outs
     convertBin(usrInt, host);
@@ -77,8 +82,21 @@ void calcAND(int* param1, int* param2, int* result){
 
 //WELCOME SUBROUTINE
 void welcome(void){
-    //FIXME: add a system() call for clearing screen
-    printf("Decimal to convert: ");
+    system("clear");
+
+    //Program Title
+    printf("     _________    ___.  v1.0            __    __                            \n");
+    printf("    /   _____/__ _\\_ |__   ____   _____/  |__/  |_  ___________            \n");
+    printf("    \\_____  \\|  |  \\ __ \\ /    \\_/ __ \\   __\\   __\\/ __ \\_  __ \\  \n");
+    printf("    /        \\  |  / \\_\\ \\   |  \\  ___/|  |  |  | \\  ___/|  | \\/     \n");
+    printf("   /_______  /____/|___  /___|  /\\___  >__|  |__|  \\___  >__|             \n");
+    printf("           \\/          \\/     \\/     \\/                \\/              \n");
+
+    //Author
+    printf("                                  by: github.com/glennlopez                  \n");
+
+    //About the program
+    printf("\n");
 }
 
 
