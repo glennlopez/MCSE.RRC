@@ -2,59 +2,97 @@
 #include <string.h>
 #include <stdlib.h>
 
-//PROTOTYPES 
-void convert(int, int*);    //convert(number to convert, array to store the value)
+#define DWORD 32
+#define WORD 16
+#define OCTET 8
+#define NIBBLE 4
+
+//SUBROUTINE PROTOTYPES 
+int convertBin(int, int*);         //convert(decimal to binary, stored at an array[])
+int convertDec(int*);               //convers binary from an array[] and returns decimal
+void printArray(int*);              //print(contents of array[])
+void calcAND(int*, int*, int*);     //Logic AND calculator func(binary, binary, store results in array[])
 
 //GLOBAL VARIABLES
-int host[32];      //user ip binary storage
-int mask[32];      //subnet ip binary storage
-int network[32];   //network address binary storage
-
-/*
-    This needs to be compiled using TDM-GCC MinGW Compiler
-    in windows (install that first). Then type "gcc subnetter.c -o subnetter" 
-    in the command prompt to make an exe out of this source code
-*/
+    //FIXME: use 2 dimentional arrays for storing IP numbers
+int host[DWORD];                     //stores user input in binary
+int subnet[DWORD] = {0,1,1,1};       //stores user subnet mask in binary using cidr notation
+int network[DWORD];                  //stores result of host AND-ed subnet
 
 
 //MAIN ROUTINE
-int main () {
-
-    //User prompt for ip
-    char usrStr[10];
-    printf("IP Address to subnet: ");
-    scanf("%s", usrStr);
-    int usrInt = atoi(usrStr);
-    
-    //FIXME: Create a function for configing 
-
-    //Windows CMD START HERE
-    /*
-    char command[50];
-    strcpy( command, "dir" );
-    system(command);
-    system("pause");
-    */
-
-
-
-    //DEBUG OUTPUT - for testing
-    convert(usrInt, host);
-
-    for(int i = 32; i >= 0; i--){
-        printf("%i", host[i]);
+int main(int argc, char* argv[]) { char usrStr[10];
+    if(argc != 2){
+        printf("Decimal to convert: ");
+        scanf("%s", usrStr);
     }
-    printf("\n");
+    else{
+        for(int i = 0; argv[1][i] != '\0'; i++){
+            usrStr[i] = argv[1][i];
+        }
+    }
+    //convert user string to int (comes from cmd-line argument and scanf)
+    int usrInt = atoi(usrStr);
+    //FIXME: CIDR "/" notation will create bugs for usrInt variable - use if to filter through the string
 
+    //IP address sanity check
+    if(usrInt > 255){
+        printf("Error: No such IP Address.\n");
+        //FIXME: replace returning error code with assuming the user wanted to convert binary to decimal
+        return 2;
+    }
 
+    //DEBUG - print outs
+    convertBin(usrInt, host);
+    printf("A: ");
+    printArray(host);
+
+    printf("B: ");
+    printArray(subnet);
+
+    calcAND(host, subnet, network);
+
+    printf("Z: ");
+    printArray(network);
+
+    printf("Dec: %i\n", convertDec(host));
+    printf("And: %i\n", convertDec(network));
 
     return(0);
 } 
 
 
 
+//AND-MASK SUBROUTINE
+void calcAND(int* param1, int* param2, int* result){
+    int BITLIMIT = OCTET;
+    
+    for(int i = 0; i < BITLIMIT; i++){
+        result[i] = param1[i] & param2[i];
+    }
+}
+
+
+
+//PRINT-OUT SUBROUTINE
+void printArray(int* param){
+    int outputSize = OCTET;
+    for(int i = (outputSize-1); i >= 0; i--){
+        printf("%i", param[i]);
+
+        //octet spacer
+        if(!(i % OCTET)){
+            printf(" ");
+        }
+
+    }
+    printf("\n");
+}
+
+
+
 //DECIMAL TO BINARY SUBROUTINE
-void convert(int param, int* param2){ int count = 0;
+int convertBin(int param, int* param2){ int count = 0;
 
     //Divide n by 2 and store remainder as a binary 1 until n = 1
     if(param == 1){
@@ -77,6 +115,23 @@ void convert(int param, int* param2){ int count = 0;
 
         count++;
     }
+    return 0;
 }
 
-//BINARY-AND SUBROUTINE
+
+
+//BINARY TO DECIMAL SUBROUTINE
+int convertDec(int* param){ int result = 0;
+
+    int BITLIMIT = OCTET;
+    int binWeight[] = {1,2,4,8,16,32,64,128};
+
+    //uses binary weight addition to convert binary to decimal
+    for(int i = 0; i < BITLIMIT; i++){
+        if(param[i] == 1){
+            result += binWeight[i];
+        } 
+    }
+
+    return result;
+}
