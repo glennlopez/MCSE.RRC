@@ -17,9 +17,9 @@ void calcAND(int*, int*, int*);     //Logic AND calculator func(binary, binary, 
 
 //GLOBAL VARIABLES
     //FIXME: use 2 dimentional arrays for storing IP numbers
-int host[DWORD];                    //stores user input in binary
-int subnet[DWORD] = {0,1,1,1};      //stores user subnet mask in binary using cidr notation
-int network[DWORD];                 //stores result of host AND-ed subnet
+int host[OCTET];                    //stores user input in binary
+int subnet[OCTET];                  //stores user subnet mask in binary using cidr notation
+int network[OCTET];                 //stores result of host AND-ed subnet
 char command[150];                  //used for system() calls to OS layer commands
 
 
@@ -47,18 +47,28 @@ int main(int argc, char* argv[]) { char usrStr[10];
     }
 
 
+    
+
+
+
+    int ipContainer[1][4] = {111,222,333,255};
+    
+
+
+
 
     //DEBUG - print outs
     convertBin(usrInt, host);
-    printf("A: ");
+    printf("Host: ");
     printArray(host);
 
-    printf("B: ");
+    convertBin(ipContainer[0][3], subnet);
+    printf("Subnet: ");
     printArray(subnet);
 
     calcAND(host, subnet, network);
 
-    printf("Z: ");
+    printf("Network: ");
     printArray(network);
 
     printf("Dec: %i\n", convertDec(host));
