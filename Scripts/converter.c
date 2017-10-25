@@ -6,6 +6,7 @@
 #define WORD 16
 #define OCTET 8
 #define NIBBLE 4
+typedef enum {false, true} bool;
 
 //SUBROUTINE PROTOTYPES 
 int sanityCheck(int[]);
@@ -29,7 +30,7 @@ int subnet[OCTET];                  //stores user subnet mask
 int network[OCTET];                 //stores result (network address)
 
 char command[150];                  //used for system() calls to OS layer commands
-
+bool halt = false;                  //global halt on error
 
 //MAIN ROUTINE
 int main(int argc, char* argv[]) { char usrStr[20];
@@ -64,7 +65,7 @@ int main(int argc, char* argv[]) { char usrStr[20];
     printf("Host: ");
     printArray(host);
 
-    convertBin(subnetContainer[0][3], subnet);  //DEBUG
+    convertBin(subnetContainer[0][3], subnet);
     printf("Subnet: ");
     printArray(subnet);
 
@@ -88,12 +89,11 @@ int sanityCheck(int param[]){
     for(int i = 0; i < 4; i++){
         if( (param[i] > 255) || (param[i] < 0 )){
             printf("Error: No such IP Address.\n");
+            halt = true;
             return 2;
         }
     }
-
-
-        
+    
     return 0;
 }
 
@@ -157,6 +157,12 @@ void printArray(int* param){
 
 //DECIMAL TO BINARY SUBROUTINE
 int convertBin(int param, int* param2){ int count = 0;
+    
+    //bus error protection
+    if(halt == true){
+        return 2;
+    }
+    
 
     //Divide n by 2 and store remainder as a binary 1 until n = 1
     if(param == 1){
