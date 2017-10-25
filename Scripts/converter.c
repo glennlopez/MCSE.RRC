@@ -86,11 +86,13 @@ int main(int argc, char* argv[]) { char usrStr[20];
 int sanityCheck(int param[]){
 
     for(int i = 0; i < 4; i++){
-        if(param[1] > 255){
+        if( (param[i] > 255) || (param[i] < 0 )){
             printf("Error: No such IP Address.\n");
             return 2;
         }
     }
+
+
         
     return 0;
 }
