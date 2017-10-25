@@ -8,7 +8,8 @@
 #define NIBBLE 4
 
 //SUBROUTINE PROTOTYPES 
-void getHost(char*, int*);          //char* - userstring, int* - store
+//void getHost(char*, int*);          //char* - userstring, int* - store
+void extractToGlobal(char*);
 
 int system(const char*);            //system calls
 void welcome(void);                 //reserved for welcome ascii art
@@ -18,7 +19,6 @@ void printArray(int*);              //print(contents of array[])
 void calcAND(int*, int*, int*);     //Logic AND calculator func(binary, binary, store results in array[])
 
 //GLOBAL VARIABLES
-    //FIXME: use 2 dimentional arrays for storing IP numbers
 int host[OCTET];                    //stores user input in binary
 int hostContainer[1][4];
 
@@ -57,49 +57,18 @@ int main(int argc, char* argv[]) { char usrStr[20];
 
 
 
-    //DEBUG DEBUG
-    //extract numbers from string - 172.16.1.100/16
-    /*
-        INPUT           [1][7][2][.][1][6][.][1][.][1][0][0][/][1][6][NULL]
-        stringTemp      ["172"]
-                        ["16"]
-                        ["1"]
-                        ["100"] 
-        intTemp         [172][16][1][100]
-
-    */
-    char stringTemp[4][4];
-
-    int intTemp[4];
-    int octetIndex = 0;
-    int bitIndex = 0;
     
-    for(int i = 0; usrStr[i] != '\0'; i++){
-
-        if(usrStr[i] == '.'){
-            octetIndex++;
-            bitIndex = 0;
-            i++;
-        }
-
-        stringTemp[octetIndex][bitIndex] = usrStr[i];
-        bitIndex++;
-
-        hostContainer[0][octetIndex] = atoi(stringTemp[octetIndex]);
-
-    }
+    extractToGlobal(usrStr);
     
+    
+    
+
+    //DEBUG - print outs
     printf("hostContainer 0: %i\n", hostContainer[0][0]);
     printf("hostContainer 1: %i\n", hostContainer[0][1]);
     printf("hostContainer 2: %i\n", hostContainer[0][2]);
     printf("hostContainer 3: %i\n", hostContainer[0][3]);
 
-    
-
-
-
-
-    //DEBUG - print outs
     convertBin(usrInt, host);
     printf("Host: ");
     printArray(host);
@@ -118,6 +87,32 @@ int main(int argc, char* argv[]) { char usrStr[20];
 
     return(0);
 } 
+
+
+
+//STRING EXTRACTION SUBROUTINE
+void extractToGlobal(char* param){
+
+    char stringTemp[4][4];
+    int intTemp[4];
+    int octetIndex = 0;
+    int bitIndex = 0;
+    
+    for(int i = 0; param[i] != '\0'; i++){
+
+        if(param[i] == '.'){
+            octetIndex++;
+            bitIndex = 0;
+            i++;
+        }
+
+        stringTemp[octetIndex][bitIndex] = param[i];
+        bitIndex++;
+
+        hostContainer[0][octetIndex] = atoi(stringTemp[octetIndex]);
+    }
+
+}
 
 
 
