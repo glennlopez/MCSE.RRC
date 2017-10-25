@@ -8,7 +8,7 @@
 #define NIBBLE 4
 
 //SUBROUTINE PROTOTYPES 
-int sanityCheck(char*);
+int sanityCheck(int[]);
 void extractToGlobal(char*);
 
 int system(const char*);            //system calls
@@ -34,6 +34,7 @@ char command[150];                  //used for system() calls to OS layer comman
 //MAIN ROUTINE
 int main(int argc, char* argv[]) { char usrStr[20];
 
+    //FIXME: may not work for Windows
     if(argc != 2){
         welcome();              //welcome the user
         printf("Convert: ");
@@ -49,7 +50,7 @@ int main(int argc, char* argv[]) { char usrStr[20];
 
     
     extractToGlobal(usrStr);
-    //sanityCheck(hostContainer);
+    sanityCheck(hostContainer[0]);
     
 
 
@@ -82,14 +83,15 @@ int main(int argc, char* argv[]) { char usrStr[20];
 
 
 //SANITY CHECK SUBROUTINE
-int sanityCheck(char* param){
-    int usrInt = atoi(param);
-    
-        //IP address sanity check
-        if(usrInt > 255){
+int sanityCheck(int param[]){
+
+    for(int i = 0; i < 4; i++){
+        if(param[1] > 255){
             printf("Error: No such IP Address.\n");
             return 2;
         }
+    }
+        
     return 0;
 }
 
