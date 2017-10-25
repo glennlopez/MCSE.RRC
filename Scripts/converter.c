@@ -8,6 +8,8 @@
 #define NIBBLE 4
 
 //SUBROUTINE PROTOTYPES 
+void getHost(char*, int*);          //char* - userstring, int* - store
+
 int system(const char*);            //system calls
 void welcome(void);                 //reserved for welcome ascii art
 int convertBin(int, int*);          //convert(decimal to binary, stored at an array[])
@@ -18,13 +20,20 @@ void calcAND(int*, int*, int*);     //Logic AND calculator func(binary, binary, 
 //GLOBAL VARIABLES
     //FIXME: use 2 dimentional arrays for storing IP numbers
 int host[OCTET];                    //stores user input in binary
+int hostContainer[1][4] = {999,88,77,66};
+
 int subnet[OCTET];                  //stores user subnet mask in binary using cidr notation
+int subnetContainer[1][4] = {255,255,255,255};
+
 int network[OCTET];                 //stores result of host AND-ed subnet
+int networkContainer[1][4] = {0,0,0,0};
+
 char command[150];                  //used for system() calls to OS layer commands
 
 
 //MAIN ROUTINE
-int main(int argc, char* argv[]) { char usrStr[10];
+int main(int argc, char* argv[]) { char usrStr[20];
+
     if(argc != 2){
         welcome();              //welcome the user
         printf("Convert: ");
@@ -47,11 +56,53 @@ int main(int argc, char* argv[]) { char usrStr[10];
     }
 
 
+
+    //DEBUG DEBUG
+    //extract numbers from string - 172.16.1.100/16
+    /*
+        INPUT           [1][7][2][.][1][6][.][1][.][1][0][0][/][1][6][NULL]
+        stringTemp      ["172"]
+                        ["16"]
+                        ["1"]
+                        ["100"] 
+        intTemp         [172][16][1][100]
+
+    */
+    char stringTemp[4][4] = {
+        /*
+        "172",
+        "16",
+        "1",
+        "100"
+        */
+    };
+
+    int intTemp[4];
+    int octetIndex = 0;
+    int bitIndex = 0;
     
+    for(int i = 0; usrStr[i] != '\0'; i++){
 
+        if(usrStr[i] == '.'){
+            octetIndex++;
+            bitIndex = 0;
+            i++;
+        }
 
-
-    int ipContainer[1][4] = {111,222,333,255};
+        stringTemp[octetIndex][bitIndex] = usrStr[i];
+ 
+        bitIndex++;
+    }
+    
+    hostContainer[0][0] = atoi(usrStr);
+    printf("StringTemp[0]: %s \n", stringTemp[0]);
+    //stringTemp[1][2] = usrStr[2];
+    printf("StringTemp[1]: %s \n", stringTemp[1]);
+    printf("StringTemp[2]: %s \n", stringTemp[2]);
+    
+    printf("hostContainer 0: %i\n", hostContainer[0][0]);
+    printf("hostContainer 1: %i\n", hostContainer[0][1]);
+    printf("hostContainer 2: %i\n", hostContainer[0][2]);
     
 
 
@@ -62,7 +113,7 @@ int main(int argc, char* argv[]) { char usrStr[10];
     printf("Host: ");
     printArray(host);
 
-    convertBin(ipContainer[0][3], subnet);
+    convertBin(subnetContainer[0][3], subnet);  //DEBUG
     printf("Subnet: ");
     printArray(subnet);
 
