@@ -20,7 +20,7 @@ void calcAND(int*, int*, int*);     //Logic AND calculator func(binary, binary, 
 //GLOBAL VARIABLES
     //FIXME: use 2 dimentional arrays for storing IP numbers
 int host[OCTET];                    //stores user input in binary
-int hostContainer[1][4] = {999,88,77,66};
+int hostContainer[1][4];
 
 int subnet[OCTET];                  //stores user subnet mask in binary using cidr notation
 int subnetContainer[1][4] = {255,255,255,255};
@@ -68,14 +68,7 @@ int main(int argc, char* argv[]) { char usrStr[20];
         intTemp         [172][16][1][100]
 
     */
-    char stringTemp[4][4] = {
-        /*
-        "172",
-        "16",
-        "1",
-        "100"
-        */
-    };
+    char stringTemp[4][4];
 
     int intTemp[4];
     int octetIndex = 0;
@@ -90,19 +83,17 @@ int main(int argc, char* argv[]) { char usrStr[20];
         }
 
         stringTemp[octetIndex][bitIndex] = usrStr[i];
- 
         bitIndex++;
+
+        hostContainer[0][octetIndex] = atoi(stringTemp[octetIndex]);
+
     }
-    
-    hostContainer[0][0] = atoi(usrStr);
-    printf("StringTemp[0]: %s \n", stringTemp[0]);
-    //stringTemp[1][2] = usrStr[2];
-    printf("StringTemp[1]: %s \n", stringTemp[1]);
-    printf("StringTemp[2]: %s \n", stringTemp[2]);
     
     printf("hostContainer 0: %i\n", hostContainer[0][0]);
     printf("hostContainer 1: %i\n", hostContainer[0][1]);
     printf("hostContainer 2: %i\n", hostContainer[0][2]);
+    printf("hostContainer 3: %i\n", hostContainer[0][3]);
+
     
 
 
