@@ -10,7 +10,7 @@ typedef enum {false, true} bool;
 
 //SUBROUTINE PROTOTYPES 
 int sanityCheck(int[]);
-void extractToGlobal(char*);
+int extractToGlobal(char*);
 
 int system(const char*);            //system calls
 void welcome(void);                 //reserved for welcome ascii art
@@ -19,7 +19,7 @@ int convertDec(int*);               //convers binary from an array[] and returns
 void printArray(int*);              //print(contents of array[])
 void calcAND(int*, int*, int*);     //Logic AND calculator func(binary, binary, store results in array[])
 
-//GLOBAL VARIABLES
+//GLOBAL VARIABLES (dirty values)
 int hostContainer[1][4];
 int subnetContainer[1][4] = {255,255,255,255};
 int networkContainer[1][4];
@@ -35,11 +35,11 @@ bool halt = false;                  //global halt on error
 //MAIN ROUTINE
 int main(int argc, char* argv[]) { char usrStr[20];
 
-    //FIXME: may not work for Windows
+    //FIXME: command line arguments may not work for Windows
     if(argc != 2){
-        welcome();              //welcome the user
+        welcome();
         printf("Convert: ");
-        scanf("%s", usrStr);    //grab users input
+        scanf("%s", usrStr);
     }
     else{
         for(int i = 0; argv[1][i] != '\0'; i++){
@@ -88,7 +88,7 @@ int sanityCheck(int param[]){
 
     for(int i = 0; i < 4; i++){
         if( (param[i] > 255) || (param[i] < 0 )){
-            printf("Error: No such IP Address.\n");
+            printf("Error: IP address has an octet larger than 255.\n");
             halt = true;
             return 2;
         }
@@ -100,7 +100,7 @@ int sanityCheck(int param[]){
 
 
 //STRING EXTRACTION SUBROUTINE
-void extractToGlobal(char* param){
+int extractToGlobal(char* param){
 
     char stringTemp[4][4];
     int intTemp[4];
@@ -115,20 +115,29 @@ void extractToGlobal(char* param){
             i++;
         }
 
+        //octet sanity check
+        if(octetIndex > 3){
+            halt = true;
+            printf("Error: IP address has too many octets.\n");
+            return 0;
+        }
+
         stringTemp[octetIndex][bitIndex] = param[i];
         bitIndex++;
 
         hostContainer[0][octetIndex] = atoi(stringTemp[octetIndex]);
     }
 
-    //FIXME: routine for converting CIDR notation to 32bit binary
+    //FIXME: add routine for converting CIDR notation to 32bit binary
 
+    return 0;
 }
 
 
 
 //AND-MASK SUBROUTINE
 void calcAND(int* param1, int* param2, int* result){
+
     int BITLIMIT = OCTET;
     
     for(int i = 0; i < BITLIMIT; i++){
