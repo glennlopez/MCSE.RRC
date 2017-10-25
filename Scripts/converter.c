@@ -8,7 +8,7 @@
 #define NIBBLE 4
 
 //SUBROUTINE PROTOTYPES 
-//void getHost(char*, int*);          //char* - userstring, int* - store
+int sanityCheck(char*);
 void extractToGlobal(char*);
 
 int system(const char*);            //system calls
@@ -19,14 +19,14 @@ void printArray(int*);              //print(contents of array[])
 void calcAND(int*, int*, int*);     //Logic AND calculator func(binary, binary, store results in array[])
 
 //GLOBAL VARIABLES
-int host[OCTET];                    //stores user input in binary
 int hostContainer[1][4];
-
-int subnet[OCTET];                  //stores user subnet mask in binary using cidr notation
 int subnetContainer[1][4] = {255,255,255,255};
+int networkContainer[1][4];
 
-int network[OCTET];                 //stores result of host AND-ed subnet
-int networkContainer[1][4] = {0,0,0,0};
+//binary storage for bitwise calculations
+int host[OCTET];                    //stores user input
+int subnet[OCTET];                  //stores user subnet mask
+int network[OCTET];                 //stores result (network address)
 
 char command[150];                  //used for system() calls to OS layer commands
 
@@ -44,24 +44,14 @@ int main(int argc, char* argv[]) { char usrStr[20];
             usrStr[i] = argv[1][i];
         }
     }
-    //convert user string to int (comes from cmd-line argument and scanf)
-    int usrInt = atoi(usrStr);
-    //FIXME: CIDR "/" notation will create bugs for usrInt variable - use if to filter through the string
-
-    //IP address sanity check
-    if(usrInt > 255){
-        printf("Error: No such IP Address.\n");
-        //FIXME: replace returning error code with assuming the user wanted to convert binary to decimal
-        return 2;
-    }
 
 
 
     
     extractToGlobal(usrStr);
+    //sanityCheck(hostContainer);
     
-    
-    
+
 
     //DEBUG - print outs
     printf("hostContainer 0: %i\n", hostContainer[0][0]);
@@ -69,7 +59,7 @@ int main(int argc, char* argv[]) { char usrStr[20];
     printf("hostContainer 2: %i\n", hostContainer[0][2]);
     printf("hostContainer 3: %i\n", hostContainer[0][3]);
 
-    convertBin(usrInt, host);
+    convertBin(hostContainer[0][0], host);
     printf("Host: ");
     printArray(host);
 
@@ -87,6 +77,21 @@ int main(int argc, char* argv[]) { char usrStr[20];
 
     return(0);
 } 
+
+
+
+
+//SANITY CHECK SUBROUTINE
+int sanityCheck(char* param){
+    int usrInt = atoi(param);
+    
+        //IP address sanity check
+        if(usrInt > 255){
+            printf("Error: No such IP Address.\n");
+            return 2;
+        }
+    return 0;
+}
 
 
 
@@ -112,6 +117,8 @@ void extractToGlobal(char* param){
         hostContainer[0][octetIndex] = atoi(stringTemp[octetIndex]);
     }
 
+    //FIXME: routine for converting CIDR notation to 32bit binary
+
 }
 
 
@@ -123,27 +130,6 @@ void calcAND(int* param1, int* param2, int* result){
     for(int i = 0; i < BITLIMIT; i++){
         result[i] = param1[i] & param2[i];
     }
-}
-
-
-
-//WELCOME SUBROUTINE
-void welcome(void){
-    system("clear");
-
-    //Program Title
-    printf("     _________    ___.  v1.0            __    __                            \n");
-    printf("    /   _____/__ _\\_ |__   ____   _____/  |__/  |_  ___________            \n");
-    printf("    \\_____  \\|  |  \\ __ \\ /    \\_/ __ \\   __\\   __\\/ __ \\_  __ \\  \n");
-    printf("    /        \\  |  / \\_\\ \\   |  \\  ___/|  |  |  | \\  ___/|  | \\/     \n");
-    printf("   /_______  /____/|___  /___|  /\\___  >__|  |__|  \\___  >__|             \n");
-    printf("           \\/          \\/     \\/     \\/                \\/              \n");
-
-    //Author
-    printf("                                  by: github.com/glennlopez                  \n");
-
-    //About the program
-    printf("\n");
 }
 
 
@@ -208,4 +194,25 @@ int convertDec(int* param){ int result = 0;
     }
 
     return result;
+}
+
+
+
+//WELCOME SUBROUTINE
+void welcome(void){
+    system("clear");
+
+    //Program Title
+    printf("     _________    ___.  v1.0            __    __                            \n");
+    printf("    /   _____/__ _\\_ |__   ____   _____/  |__/  |_  ___________            \n");
+    printf("    \\_____  \\|  |  \\ __ \\ /    \\_/ __ \\   __\\   __\\/ __ \\_  __ \\  \n");
+    printf("    /        \\  |  / \\_\\ \\   |  \\  ___/|  |  |  | \\  ___/|  | \\/     \n");
+    printf("   /_______  /____/|___  /___|  /\\___  >__|  |__|  \\___  >__|             \n");
+    printf("           \\/          \\/     \\/     \\/                \\/              \n");
+
+    //Author
+    printf("                                  by: github.com/glennlopez                  \n");
+
+    //About the program
+    printf("\n");
 }
