@@ -1,3 +1,4 @@
+//FIXME: error when ip is set to 0.0.0.0
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -9,7 +10,6 @@
 typedef enum {false, true} bool;
 
 //SUBROUTINE PROTOTYPES 
-int sanityCheck(int[]);
 int extractToGlobal(char*);
 
 int system(const char*);            //system calls
@@ -51,7 +51,6 @@ int main(int argc, char* argv[]) { char usrStr[20];
 
     
     extractToGlobal(usrStr);
-    sanityCheck(hostContainer[0]);
     
 
 
@@ -83,22 +82,6 @@ int main(int argc, char* argv[]) { char usrStr[20];
 
 
 
-//SANITY CHECK SUBROUTINE
-int sanityCheck(int param[]){
-
-    for(int i = 0; i < 4; i++){
-        if( (param[i] > 255) || (param[i] < 0 )){
-            printf("Error: IP address has an octet larger than 255.\n");
-            halt = true;
-            return 2;
-        }
-    }
-    
-    return 0;
-}
-
-
-
 //STRING EXTRACTION SUBROUTINE
 int extractToGlobal(char* param){
 
@@ -115,20 +98,42 @@ int extractToGlobal(char* param){
             i++;
         }
 
-        //octet sanity check
-        if(octetIndex > 3){
-            halt = true;
-            printf("Error: IP address has too many octets.\n");
-            return 0;
-        }
-
         stringTemp[octetIndex][bitIndex] = param[i];
         bitIndex++;
 
         hostContainer[0][octetIndex] = atoi(stringTemp[octetIndex]);
     }
 
+    //Input sanity check
+    if((octetIndex > 3) || (octetIndex < 3)){
+        halt = true;
+        printf("Error: Invalid IPv4 address.\n");
+        return 0;
+    }
+    for(int i = 0; i < 4; i++){
+        if((int)(hostContainer[0][i] > 255) || ((int)hostContainer[0][i] < 0 )){
+            printf("Error: IP address has an out of range octet.\n");
+            halt = true;
+            return 2;
+        }
+    }
+
     //FIXME: add routine for converting CIDR notation to 32bit binary
+    /*
+                8           16          24          32  
+             1111 1111 . 1111 1111 . 1111 1111 . 1111 1111
+        /16  1111 1111 . 1111 1111 . 0000 0000 . 0000 0000
+        /28  1111 1111 . 1111 1111 . 1111 1111 . 1111 0000 
+        /14  1111 1111 . 1111 1100 . 0000 0000 . 0000 0000
+
+
+    */
+
+    int cidr = 14;
+    int subnetAdr[] ={
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    };
+
 
     return 0;
 }
