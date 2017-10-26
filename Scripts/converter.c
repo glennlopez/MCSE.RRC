@@ -25,6 +25,7 @@ int subnetContainer[1][4] = {255,255,255,255};
 int networkContainer[1][4];
 
 //binary storage for bitwise calculations
+    //FIXME: store binary using 2d arrays (might be usefull in the future)
 int host[OCTET];                    //stores user input
 int subnet[OCTET];                  //stores user subnet mask
 int network[OCTET];                 //stores result (network address)
@@ -47,9 +48,6 @@ int main(int argc, char* argv[]) { char usrStr[20];
         }
     }
 
-
-
-    
     extractToGlobal(usrStr);
     
 
@@ -90,6 +88,7 @@ int extractToGlobal(char* param){
     int octetIndex = 0;
     int bitIndex = 0;
     
+    //extraction routine
     for(int i = 0; param[i] != '\0'; i++){
 
         if(param[i] == '.'){
@@ -104,7 +103,7 @@ int extractToGlobal(char* param){
         hostContainer[0][octetIndex] = atoi(stringTemp[octetIndex]);
     }
 
-    //Input sanity check
+    //sanity check routine
     if((octetIndex > 3) || (octetIndex < 3)){
         halt = true;
         printf("Error: Invalid IPv4 address.\n");
@@ -128,7 +127,6 @@ int extractToGlobal(char* param){
 
 
     */
-
     int cidr = 14;
     int subnetAdr[] ={
         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
